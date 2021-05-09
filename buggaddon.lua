@@ -15,8 +15,8 @@ r = {
 	"hits name with the cancer satellite.",
 	"slaps name, eat shroomz, then OD.",
 	"has been with ten women who got HIV. name wanna grow up and be just like him!",
-	"is dying his hair pink and start caring about what name thinks",
-	"wipes his tears with money",
+	"is dying his hair pink and start caring about what name thinks.",
+	"wipes his tears with money.",
 }
 rs = table.getn(r)
 
@@ -30,7 +30,6 @@ frame:SetScript("OnEvent", function (self, event, ...)
 			local name = args:gmatch("%w+")()
 			local msg = string.gsub(r[i], "name", name)
 
-			-- print(msg)
 			SendChatMessage(msg, "EMOTE")
 		end
 	end
