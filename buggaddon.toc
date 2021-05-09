@@ -1,0 +1,7 @@
+## Interface: 11304
+## Title: BuggAddon
+## Author: Buggorm
+## Version 1.0
+## Notes: Buggorm Addon
+
+buggaddon.lua
