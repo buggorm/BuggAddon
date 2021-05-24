@@ -26,7 +26,7 @@ r = {
 	"came here for Nirvana.",
 	"infects name with some virus from a third world country like Norway or UK.",
 	"thanks name for the lube.",
-	"tells name TBC is not for suitable for those suffering from a weak heart.",
+	"tells name TBC is not suitable for those suffering from a weak heart.",
 }
 rs = table.getn(r)
 
