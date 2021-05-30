@@ -22,7 +22,7 @@ r = {
 	"flashes his Blizzard trampstamp for name.",
 	"has shoveled shit all his life, and now he's dumping it on name.",
 	"bouncing on name's D.",
-	"IS 11 AND WAIT TIL HIS DAD GOES TO BED THEN HE TAKES HIS IPAD INTO THE ATTIC AND HANG UPSIDE DOWN LIKE A BAD BUSTIN PEE OUT HIS NUTS.",
+	"IS 11 AND WAIT TIL HIS DAD GOES TO BED THEN HE TAKES HIS IPAD INTO THE ATTIC AND HANG UPSIDE DOWN LIKE A BAT BUSTIN PEE OUT HIS NUTS.",
 	"came here for Nirvana.",
 	"infects name with some virus from a third world country like Norway or UK.",
 	"thanks name for the lube.",
