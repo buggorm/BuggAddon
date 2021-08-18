@@ -65,38 +65,19 @@ function genDungeonSuggestion(args)
 	return "suggests " .. d[i] .. "."
 end
 
-frame:RegisterEvent("CHAT_MSG_EMOTE")
 frame:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 frame:SetScript("OnEvent", function (self, event, ...)
+	local args = tostring(...)
 	if event == "CHAT_MSG_TEXT_EMOTE" then
-		local args = tostring(...)
 		local spit = string.match(args, "spits on you")
-		local lol = string.match(args, "laughs at you")
-		local rofl = string.match(args, "rolls on the floor laughing at you")
 		local question = string.match(args, "questions you")
 
-		local hostile = spit or lol or rofl
-
-		if hostile then
+		if spit then
 			local msg = genInsult(args)
 			SendChatMessage(msg, "EMOTE")
 		elseif question then
 			local msg = genDungeonSuggestion(args)
 			SendChatMessage(msg, "EMOTE")
-		end
-	elseif event == "CHAT_MSG_EMOTE" then
-		local args = tostring(...)
-		local myName = UnitName("player")
-		local spit = string.match(args, "spits on " .. myName)
-		local lol = string.match(args, "laughs at " .. myName)
-		local rofl = string.match(args, "rolls on the floor laughing at " .. myName)
-
-		local hostile = spit or lol or rofl
-
-		if hostile then
-			local msg = genInsult(args)
-			-- TODO fix name
---			SendChatMessage(msg, "EMOTE")
 		end
 	end
 end)
@@ -117,7 +98,9 @@ function SlashCmdList.BUGG(msg, ...)
 
 	local cmd = t[1]:lower()
 
-	if cmd == "m" or m == "macro" then
+	if cmd == "help" then
+		print('|cff55DFFFBugg|r|cff29D5C5Addon|r|cffF9F9F7: Documentation can be found at https://github.com/buggorm/BuggAddon|r')
+	elseif cmd == "m" or m == "macro" then
 		local name = t[2]
 		local args = ''
 		for i=3,ts do
