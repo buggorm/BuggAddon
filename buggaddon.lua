@@ -65,6 +65,10 @@ function genDungeonSuggestion(args)
 	return "suggests " .. d[i] .. "."
 end
 
+function buggPrint(msg)
+	print('|cff55DFFFBugg|r|cff29D5C5Addon|r|cffF9F9F7: ' .. msg .. '|r')
+end
+
 frame:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 frame:SetScript("OnEvent", function (self, event, ...)
 	local args = tostring(...)
@@ -87,7 +91,7 @@ end)
 SLASH_BUGG1 = '/bugg'
 function SlashCmdList.BUGG(msg, ...)
 	local t = {}
-	for a in msg:gmatch('[a-zA-Z0-9-_/?!]+') do
+	for a in msg:gmatch('[^ ]+') do
 		table.insert(t, a)
 	end
 	local ts = table.getn(t)
@@ -129,7 +133,7 @@ function SlashCmdList.BUGG(msg, ...)
 		local l = math.random(10, 12)
 		local e = math.random(13, 15)
 		local s = "Je viens d'obtenir le haut fait [ClassicAchievements:"
-		-- Je viens d'obtenir le haut fait [ClassicAchievements:223-fU-V4l3-2-39.69]
+
 		for i=1, 4 do
 			local ri = math.random(1, string.len(c))
 			s = s .. string.sub(c, ri, ri)
@@ -147,7 +151,6 @@ function SlashCmdList.BUGG(msg, ...)
 		s = s .. ']'
 		SendChatMessage(s, "GUILD")
 	elseif cmd == "i" or cmd == "item" then
-		-- https://tbc.wowhead.com/search?q=black+lotus
 		local url = "https://tbc.wowhead.com/search?q="
 		local query = ''
 		for i=2,ts,1 do
@@ -163,7 +166,23 @@ function SlashCmdList.BUGG(msg, ...)
 		end
 
 		SendChatMessage(url .. query, "WHISPER", nil, whoami)
+	elseif cmd == "qc" then
+		local url = t[2]
+
+		if url == nil then
+			return
+		end
+		if not string.match(url, "^https?:\/\/tbc\.wowhead\.com\/quest=[0-9]+\/.*") then
+			buggPrint('Invalid URL')
+		end
+
+		local questId = string.match(string.match(url, "quest=[0-9]+"), "[0-9]+")
+		if questId == nil then
+			return
+		end
+
+		RunScript("print(C_QuestLog.IsQuestFlaggedCompleted(" .. questId .. "))")
 	else
-		print('|cff55DFFFBugg|r|cff29D5C5Addon|r|cffF9F9F7: Invalid command n00b!|r')
+		buggPrint('Invalid command n00b!')
 	end
 end
