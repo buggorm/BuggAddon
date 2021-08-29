@@ -100,7 +100,7 @@ function SlashCmdList.BUGG(msg, ...)
 
 	if cmd == "help" then
 		print('|cff55DFFFBugg|r|cff29D5C5Addon|r|cffF9F9F7: Documentation can be found at https://github.com/buggorm/BuggAddon|r')
-	elseif cmd == "m" or m == "macro" then
+	elseif cmd == "m" or cmd == "macro" then
 		local name = t[2]
 		local args = ''
 		for i=3,ts do
