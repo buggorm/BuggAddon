@@ -1,7 +1,8 @@
 # BuggAddon
-
+***Note: Since Blizzard decided to remove the ability to `/spit` on others, the "spit protection" feature has been switched to work on `/rude` for now***<br /><br />
 Don't you just hate when people `/spit` on you **ONLY** because you chose to buy the TBC Deluxe Edition?<br /><br />
 This Addon sure will teach these kids how to behave.
+
 
 ## How to install
 1. Click the "Code" button & select "Download ZIP"
