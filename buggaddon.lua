@@ -67,6 +67,7 @@ ct = {
 
 g = {
 	"b7908b9a939d938a9a",
+	"b79e928c9e919b88969c9787",
 }
 gs = table.getn(g)
 
@@ -134,6 +135,7 @@ function BuggPrint(msg)
 	print('|cff55DFFFBugg|r|cff29D5C5Addon|r|cffF9F9F7: ' .. msg .. ' n00b!|r')
 end
 
+frame:RegisterEvent("CHAT_MSG_GUILD")
 frame:RegisterEvent("CHAT_MSG_EMOTE")
 frame:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 frame:SetScript("OnEvent", function (self, event, ...)
@@ -172,6 +174,14 @@ frame:SetScript("OnEvent", function (self, event, ...)
 			elseif mlol or mjoke then
 				DoEmote("laugh", "none")
 			end
+		end
+	elseif event == "CHAT_MSG_GUILD" then
+		local a = { ... }
+		local gmsg = tostring(a[1])
+		local msg = string.lower(gmsg)
+		local who = tostring(a[2])
+		if msg == "gn" or msg == "goodnight" or msg == "good night" then
+			SendChatMessage(gmsg .. " " .. who, "GUILD")
 		end
 	elseif event == "CHAT_MSG_EMOTE" then
 		if fuvale then
