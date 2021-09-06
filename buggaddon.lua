@@ -305,6 +305,6 @@ function SlashCmdList.BUGG(msg, ...)
 	elseif cmd == "version" then
 		print('1.3')
 	else
-		BuggPrint('Invalid command n00b!')
+		BuggPrint('Invalid command')
 	end
 end
