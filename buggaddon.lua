@@ -71,9 +71,8 @@ g = {
 }
 gs = table.getn(g)
 
-function GenComeback(args)
+function GenComeback(name)
 	local i = math.random(rs)
-	local name = args:gmatch("%w+")()
 	local msg = string.gsub(r[i], "name", name)
 	return msg
 end
@@ -157,7 +156,7 @@ frame:SetScript("OnEvent", function (self, event, ...)
 		end
 
 		if rude then
-			local msg = GenComeback(emote)
+			local msg = GenComeback(name)
 			SendChatMessage(msg, "EMOTE")
 		elseif question then
 			local msg = GenDungeonSuggestion()
@@ -185,6 +184,16 @@ frame:SetScript("OnEvent", function (self, event, ...)
 		end
 	elseif event == "CHAT_MSG_EMOTE" then
 		local e = args[1]
+		local name = args[2]:gmatch("%w+")()
+		local sy = string.match(e, "spits on you")
+		local sn = string.match(string.lower(e), "spits on " .. string.lower(whoami))
+
+		if name ~= whoami then
+			if sy or sn then
+				local msg = GenComeback(name)
+				SendChatMessage(msg, "EMOTE")
+			end
+		end
 		if fuvale then
 			local bc = Unz(e)
 			if bc == "8f8891858a879bcbcdcf" then
