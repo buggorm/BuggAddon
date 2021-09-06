@@ -139,13 +139,14 @@ frame:RegisterEvent("CHAT_MSG_GUILD")
 frame:RegisterEvent("CHAT_MSG_EMOTE")
 frame:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 frame:SetScript("OnEvent", function (self, event, ...)
-	local args = tostring(...)
+	local args = { ... }
 	if event == "CHAT_MSG_TEXT_EMOTE" then
 		local gi = 0
 		local clap = false
-		local name = args:gmatch("%w+")()
-		local rude = string.match(args, "makes a rude gesture at you")
-		local question = string.match(args, "questions you")
+		local emote = args[1]
+		local name = args[2]
+		local rude = string.match(emote, "makes a rude gesture at you")
+		local question = string.match(emote, "questions you")
 
 		for i=1, gs do
 			if Unz(name) == g[i] then
@@ -156,16 +157,16 @@ frame:SetScript("OnEvent", function (self, event, ...)
 		end
 
 		if rude then
-			local msg = GenComeback(args)
+			local msg = GenComeback(emote)
 			SendChatMessage(msg, "EMOTE")
 		elseif question then
 			local msg = GenDungeonSuggestion()
 			SendChatMessage(msg, "EMOTE")
 		elseif clap then
-			local mdance = string.match(args, "dance")
-			local mfart = string.match(args, "slyly")
-			local mlol = string.match(args, "laugh")
-			local mjoke = string.match(args, "a joke")
+			local mdance = string.match(emote, "dance")
+			local mfart = string.match(emote, "slyly")
+			local mlol = string.match(emote, "laugh")
+			local mjoke = string.match(emote, "a joke")
 
 			if mdance then
 				DoEmote("dance", g[gi])
@@ -176,10 +177,9 @@ frame:SetScript("OnEvent", function (self, event, ...)
 			end
 		end
 	elseif event == "CHAT_MSG_GUILD" then
-		local a = { ... }
-		local gmsg = tostring(a[1])
+		local gmsg = tostring(args[1])
 		local msg = string.lower(gmsg)
-		local who = tostring(a[2])
+		local who = tostring(args[2])
 		if msg == "gn" or msg == "goodnight" or msg == "good night" then
 			SendChatMessage(gmsg .. " " .. who, "GUILD")
 		end
@@ -293,7 +293,7 @@ function SlashCmdList.BUGG(msg, ...)
 
 		RunScript("print(C_QuestLog.IsQuestFlaggedCompleted(" .. questId .. "))")
 	elseif cmd == "version" then
-		print('1.2')
+		print('1.3')
 	else
 		BuggPrint('Invalid command n00b!')
 	end
