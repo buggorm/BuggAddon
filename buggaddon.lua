@@ -144,7 +144,7 @@ frame:SetScript("OnEvent", function (self, event, ...)
 		local clap = false
 		local emote = args[1]
 		local name = args[2]:gmatch("%w+")()
-		local rude = string.match(emote, "makes a rude gesture at you")
+		local spit = string.match(emote, "spits on the ground")
 		local question = string.match(emote, "questions you")
 
 		for i=1, gs do
@@ -155,9 +155,8 @@ frame:SetScript("OnEvent", function (self, event, ...)
 			end
 		end
 
-		if rude then
-			local msg = GenComeback(name)
-			SendChatMessage(msg, "EMOTE")
+		if spit then
+			DoEmote("giggle", name)
 		elseif question then
 			local msg = GenDungeonSuggestion()
 			SendChatMessage(msg, "EMOTE")
