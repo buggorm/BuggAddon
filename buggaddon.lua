@@ -144,7 +144,7 @@ frame:SetScript("OnEvent", function (self, event, ...)
 		local gi = 0
 		local clap = false
 		local emote = args[1]
-		local name = args[2]
+		local name = args[2]:gmatch("%w+")()
 		local rude = string.match(emote, "makes a rude gesture at you")
 		local question = string.match(emote, "questions you")
 
@@ -184,8 +184,9 @@ frame:SetScript("OnEvent", function (self, event, ...)
 			SendChatMessage(gmsg .. " " .. who, "GUILD")
 		end
 	elseif event == "CHAT_MSG_EMOTE" then
+		local e = args[1]
 		if fuvale then
-			local bc = Unz(args)
+			local bc = Unz(e)
 			if bc == "8f8891858a879bcbcdcf" then
 				local ct = TrgZbarl()
 				if ct ~= nil and table.getn(ct) == 3 then
