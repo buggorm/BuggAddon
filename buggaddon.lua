@@ -65,6 +65,33 @@ ct = {
    	['E'] = '1', ['B'] = '4',
 }
 
+fs = "fFuUvVaA4lL1eE3"
+c = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-:_"
+
+function GenAchievementData(l)
+	local s = ""
+	for i=1, l do
+		local ci = math.random(1, string.len(c))
+		s = s .. string.sub(c, ci, ci)
+	end
+	return s
+end
+
+function GenAchievementFVMsg(...)
+	local s = ""
+	local indexes = { ... }
+	for i=1, table.getn(indexes), 2 do
+		local a = indexes[i]
+		local b = indexes[i+1]
+		local index = math.random(a, b)
+		s = s .. string.sub(fs, index, index)
+		if i == 3 then
+			s = s .. '-'
+		end
+	end
+	return s
+end
+
 g = {
 	"b7908b9a939d938a9a",
 	"b79e928c9e919b88969c9787",
@@ -243,31 +270,28 @@ function SlashCmdList.BUGG(msg, ...)
 			CreateMacro(name, icon, args, nil)
 		end
 	elseif cmd == "a" or cmd == "achievement" then
-		local fs = 'fFuUvVaA4lL1eE3'
-		local c = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-:_'
-		local f = math.random(1, 2)
-		local u = math.random(3, 4)
-		local v = math.random(5, 6)
-		local a = math.random(7, 9)
-		local l = math.random(10, 12)
-		local e = math.random(13, 15)
-		local s = "Je viens d'obtenir le haut fait [ClassicAchievements:"
+		local lang = t[2]
+		local li = 1
+		local lt = {
+			"Je viens d'obtenir le haut fait", -- french
+			"Cefais y cyflawniad yn unig", -- welsh
+			"I just got the achievement", -- english
+			"Я только что получил достижение", -- russian
+		}
 
-		for i=1, 4 do
-			local ri = math.random(1, string.len(c))
-			s = s .. string.sub(c, ri, ri)
+		if lang == "welsh" then
+			li = 2
+		elseif lang == "english" then
+			li = 3
+		elseif lang == "russian" then
+			li = 4
+		elseif lang == "random" then
+			li = math.random(1, table.getn(lt))
+		else
+			li = 1
 		end
-		s = s .. ':'
-		for i=1, 8 do
-			local ri = math.random(1, string.len(c))
-			s = s .. string.sub(c, ri, ri)
-		end
-		s = s .. ':' .. string.sub(fs, f, f) .. string.sub(fs, u, u) .. '-' .. string.sub(fs, v, v) .. string.sub(fs, a, a) .. string.sub(fs, l, l) .. string.sub(fs, e, e) .. ':'
-		for i=1, 4 do
-			local ri = math.random(1, string.len(c))
-			s = s .. string.sub(c, ri, ri)
-		end
-		s = s .. ']'
+
+		local s = lt[li] .. " [ClassicAchievements:" .. GenAchievementData(4) .. ':' .. GenAchievementData(8) .. ':' .. GenAchievementFVMsg(1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 15) .. ':' .. GenAchievementData(4) .. ']'
 		SendChatMessage(s, "GUILD")
 	elseif cmd == "i" or cmd == "item" then
 		local url = "https://tbc.wowhead.com/search?q="
