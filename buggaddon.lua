@@ -204,9 +204,16 @@ frame:SetScript("OnEvent", function (self, event, ...)
 	elseif event == "CHAT_MSG_GUILD" then
 		local gmsg = tostring(args[1])
 		local msg = string.lower(gmsg)
+		local bw = {
+			"Take care",
+			"Goodnight",
+			"Sleep well",
+			"Cya",
+		}
+		local i = math.random (1, table.getn(bw))
 		local who = tostring(args[2])
 		if who ~= whoami and msg == "gn" or msg == "goodnight" or msg == "good night" then
-			SendChatMessage(gmsg .. " " .. who, "GUILD")
+			SendChatMessage(bw[i] .. " " .. who .. "!", "GUILD")
 		end
 	elseif event == "CHAT_MSG_EMOTE" then
 		local e = args[1]
