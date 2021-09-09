@@ -51,7 +51,7 @@ d = {
 }
 ds = table.getn(d)
 
-local whoami = UnitName("player")
+local whoami = UnitName("player"):gmatch("%w+")()
 
 fs = "fFuUvVaA4lL1eE3"
 c = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-:_"
@@ -93,6 +93,7 @@ function BuggPrint(msg)
 	print('|cff55DFFFBugg|r|cff29D5C5Addon|r|cffF9F9F7: ' .. msg .. ' n00b!|r')
 end
 
+frame:RegisterEvent("CHAT_MSG_GUILD")
 frame:RegisterEvent("CHAT_MSG_EMOTE")
 frame:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 frame:SetScript("OnEvent", function (self, event, ...)
@@ -115,6 +116,13 @@ frame:SetScript("OnEvent", function (self, event, ...)
 				local msg = GenComeback(name)
 				SendChatMessage(msg, "EMOTE")
 			end
+		end
+	elseif event == "CHAT_MSG_GUILD" then
+		local gmsg = args[1]
+		local who = args[2]:gmatch("%w+")()
+		local msg = string.lower(gmsg)
+		if whoami ~= who and msg == "gn" or msg == "good night" or msg == "goodnight" or msg == "g n" or msg == "g.n" then
+			SendChatMessage(gmsg .. ' ' .. who, "GUILD")
 		end
 	end
 end)
