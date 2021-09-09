@@ -1,5 +1,5 @@
 # BuggAddon
-***Note: Since Blizzard decided to remove the ability to `/spit` on others, the "spit protection" feature has been switched to work on `/rude` for now***<br /><br />
+
 Don't you just hate when people `/spit` on you **ONLY** because you chose to buy the TBC Deluxe Edition?<br /><br />
 This Addon sure will teach these kids how to behave.
 
@@ -49,5 +49,6 @@ Command   | Action | Example | Output
 | | | `/bugg achievement` | [Guild][Buggorm]: Je viens d'obtenir le haut fait [ClassicAchievements:RfLi7ynkiDvYh:fU-V4Le:Kup9]
 `m` or `macro` | Creates a macro | `/bugg m dance /dance` | Creates a macro called "dance" with the content `/dance`
 | | | `/bugg macro tarmob /tar onyxia` | Creates a macro called "tarmob" with the content `/tar onyxia`
+`qc` | Check if quest is completed | `/bugg qc https://tbc.wowhead.com/quest=176/wanted-hogger` | true
 
 
