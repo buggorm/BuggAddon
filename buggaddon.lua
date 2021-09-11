@@ -122,7 +122,7 @@ frame:SetScript("OnEvent", function (self, event, ...)
 		local who = args[2]:gmatch("%w+")()
 		local msg = string.lower(gmsg)
 		if whoami ~= who and msg == "gn" or msg == "good night" or msg == "goodnight" or msg == "g n" or msg == "g.n" then
-			SendChatMessage(gmsg .. ' ' .. who, "GUILD")
+			SendChatMessage(gmsg .. ' ' .. args[2], "GUILD")
 		end
 	end
 end)
