@@ -57,6 +57,7 @@ rl = {
 	"Minivale",
 	"Cordonbleu",
 	"Gabbosh",
+	"Athenai",
 }
 rls = table.getn(rl)
 
@@ -148,7 +149,7 @@ frame:SetScript("OnEvent", function (self, event, ...)
 					if string.match(args[1], who .. " receives loot") then
 						local itemId = getItemId(args[1])
 						local itemRarity = select(3, GetItemInfo(itemId))
-						if itemRarity <= 4 then
+						if itemRarity >= 4 then
 							local itemLink = select(2, GetItemInfo(itemId))
 							SendChatMessage("When are you rolling out " .. itemLink .. "?", "WHISPER", nil, who)
 						end
@@ -253,7 +254,7 @@ function SlashCmdList.BUGG(msg, ...)
 
 		RunScript("print(C_QuestLog.IsQuestFlaggedCompleted(" .. questId .. "))")
 	elseif cmd == "version" or cmd == "--version" or cmd == "-v" then
-		BuggPrint('1.4')
+		BuggPrint('1.4.1')
 	else
 		BuggPrint('Invalid command')
 	end
