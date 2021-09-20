@@ -253,7 +253,7 @@ function SlashCmdList.BUGG(msg, ...)
 
 		RunScript("print(C_QuestLog.IsQuestFlaggedCompleted(" .. questId .. "))")
 	elseif cmd == "version" or cmd == "--version" or cmd == "-v" then
-		BuggPrint('1.3')
+		BuggPrint('1.4')
 	else
 		BuggPrint('Invalid command')
 	end
