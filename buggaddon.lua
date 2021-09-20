@@ -53,6 +53,13 @@ ds = table.getn(d)
 
 local whoami = UnitName("player"):gmatch("%w+")()
 
+rl = {
+	"Minivale",
+	"Cordonbleu",
+	"Gabbosh",
+}
+rls = table.getn(rl)
+
 fs = "fFuUvVaA4lL1eE3"
 c = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-:_"
 
@@ -78,6 +85,14 @@ function GenAchievementFVMsg(...)
 	return s
 end
 
+function getItemId(lootString)
+	words = {}
+	for word in lootString:gmatch("%w+") do
+		table.insert(words, word)
+	end
+	return words[6]
+end
+
 function GenComeback(name)
 	local i = math.random(rs)
 	local msg = string.gsub(r[i], "name", name)
@@ -93,6 +108,7 @@ function BuggPrint(msg)
 	print('|cff55DFFFBugg|r|cff29D5C5Addon|r|cffF9F9F7: ' .. msg .. ' n00b!|r')
 end
 
+frame:RegisterEvent("CHAT_MSG_LOOT")
 frame:RegisterEvent("CHAT_MSG_GUILD")
 frame:RegisterEvent("CHAT_MSG_EMOTE")
 frame:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
@@ -123,6 +139,22 @@ frame:SetScript("OnEvent", function (self, event, ...)
 		local msg = string.lower(gmsg)
 		if whoami ~= who and msg == "gn" or msg == "good night" or msg == "goodnight" or msg == "g n" or msg == "g.n" then
 			SendChatMessage(gmsg .. ' ' .. args[2], "GUILD")
+		end
+	elseif event == "CHAT_MSG_LOOT" then
+		if IsInRaid() then
+			local who = args[1]:gmatch("%w+")()
+			for i=1, rls do
+				if who == rl[i] then
+					if string.match(args[1], who .. " receives loot") then
+						local itemId = getItemId(args[1])
+						local itemRarity = select(3, GetItemInfo(itemId))
+						if itemRarity <= 4 then
+							local itemLink = select(2, GetItemInfo(itemId))
+							SendChatMessage("When are you rolling out " .. itemLink .. "?", "WHISPER", nil, who)
+						end
+					end
+				end
+			end
 		end
 	end
 end)
