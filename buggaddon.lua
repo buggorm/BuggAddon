@@ -254,7 +254,7 @@ function SlashCmdList.BUGG(msg, ...)
 
 		RunScript("print(C_QuestLog.IsQuestFlaggedCompleted(" .. questId .. "))")
 	elseif cmd == "ghs" or cmd == "ghettohs" then
-		if not UnitInParty("player")
+		if not UnitInParty("player") then
 			InviteUnit("a")
 			C_Timer.After(1, function() LeaveParty() end)
 		end
