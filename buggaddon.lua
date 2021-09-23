@@ -259,7 +259,7 @@ function SlashCmdList.BUGG(msg, ...)
 			C_Timer.After(1, function() LeaveParty() end)
 		end
 	elseif cmd == "version" or cmd == "--version" or cmd == "-v" then
-		BuggPrint('1.4.1')
+		BuggPrint('1.4.2')
 	else
 		BuggPrint('Invalid command')
 	end
