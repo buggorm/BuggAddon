@@ -253,6 +253,11 @@ function SlashCmdList.BUGG(msg, ...)
 		end
 
 		RunScript("print(C_QuestLog.IsQuestFlaggedCompleted(" .. questId .. "))")
+	elseif cmd == "ghs" or cmd == "ghettohs" then
+		if not UnitInParty("player")
+			InviteUnit("a")
+			C_Timer.After(1, function() LeaveParty() end)
+		end
 	elseif cmd == "version" or cmd == "--version" or cmd == "-v" then
 		BuggPrint('1.4.1')
 	else
