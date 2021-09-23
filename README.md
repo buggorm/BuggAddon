@@ -50,6 +50,6 @@ Command   | Action | Example | Output
 `m` or `macro` | Creates a macro | `/bugg m dance /dance` | Creates a macro called "dance" with the content `/dance`
 | | | `/bugg macro tarmob /tar onyxia` | Creates a macro called "tarmob" with the content `/tar onyxia`
 `qc` | Check if quest is completed | `/bugg qc https://tbc.wowhead.com/quest=176/wanted-hogger` | true
-`ghs` or `ghettohs` | Ghetto HS yourself | `bugg ghs` |
+`ghs` or `ghettohs` | Ghetto HS yourself | `/bugg ghs` |
 
 
