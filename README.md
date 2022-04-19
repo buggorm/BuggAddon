@@ -49,6 +49,7 @@ Command   | Action | Example | Output
 | | | `/bugg achievement` | [Guild][Buggorm]: Je viens d'obtenir le haut fait [ClassicAchievements:RfLi7ynkiDvYh:fU-V4Le:Kup9]
 `m` or `macro` | Creates a macro | `/bugg m dance /dance` | Creates a macro called "dance" with the content `/dance`
 | | | `/bugg macro tarmob /tar onyxia` | Creates a macro called "tarmob" with the content `/tar onyxia`
+`sm` | Show macro | `/bugg sm tarmob` | /tar onyxia
 `qc` | Check if quest is completed | `/bugg qc https://tbc.wowhead.com/quest=176/wanted-hogger` | true
 `ghs` or `ghettohs` | Ghetto HS yourself | `/bugg ghs` |
 
