@@ -24,42 +24,13 @@ r = {
 	"flashes his Blizzard trampstamp for name.",
 	"has shoveled shit all his life, and now he's dumping it on name.",
 	"bouncing on name's D.",
-	"IS 11 AND WAIT TIL HIS DAD GOES TO BED THEN HE TAKES HIS IPAD INTO THE ATTIC AND HANG UPSIDE DOWN LIKE A BAT BUSTIN PEE OUT HIS NUTS.",
-	"came here for Nirvana.",
 	"infects name with some virus from a third world country like Norway or UK.",
 	"thanks name for the lube.",
-	"tells name TBC is not suitable for those suffering from a weak heart.",
+	"tells name Season of Mastery is not suitable for those suffering from a weak heart.",
 }
 rs = table.getn(r)
 
-d = {
-	"Hellfire Ramparts",
-	"The Blood Furnace",
-	"The Shattered Halls",
-	"Mana-Tombs",
-	"Auchenai Crypts",
-	"Sethekk Halls",
-	"Shadow Labyrinth",
-	"The Slave Pens",
-	"The Underbog",
-	"The Steamvault",
-	"Old Hillsbrad Foothills",
-	"The Black Morass",
-	"The Arcatraz",
-	"The Botanica",
-	"The Mechanar",
-}
-ds = table.getn(d)
-
 local whoami = UnitName("player"):gmatch("%w+")()
-
-rl = {
-	"Minivale",
-	"Cordonbleu",
-	"Gabbosh",
-	"Athenai",
-}
-rls = table.getn(rl)
 
 fs = "fFuUvVaA4lL1eE3"
 c = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-:_"
@@ -100,11 +71,6 @@ function GenComeback(name)
 	return msg
 end
 
-function GenDungeonSuggestion()
-	local i = math.random(ds)
-	return "suggests " .. d[i] .. "."
-end
-
 function BuggPrint(msg)
 	print('|cff55DFFFBugg|r|cff29D5C5Addon|r|cffF9F9F7: ' .. msg .. ' n00b!|r')
 end
@@ -115,14 +81,7 @@ frame:RegisterEvent("CHAT_MSG_EMOTE")
 frame:RegisterEvent("CHAT_MSG_TEXT_EMOTE")
 frame:SetScript("OnEvent", function (self, event, ...)
 	local args = { ... }
-	if event == "CHAT_MSG_TEXT_EMOTE" then
-		local question = string.match(args[1], "questions you")
-
-		if question then
-			local msg = GenDungeonSuggestion()
-			SendChatMessage(msg, "EMOTE")
-		end
-	elseif event == "CHAT_MSG_EMOTE" then
+	if event == "CHAT_MSG_EMOTE" then
 		local emote = args[1]
 		local name = args[2]:gmatch("%w+")()
 		local sy = string.match(emote, "spits? on you")
@@ -133,13 +92,6 @@ frame:SetScript("OnEvent", function (self, event, ...)
 				local msg = GenComeback(name)
 				SendChatMessage(msg, "EMOTE")
 			end
-		end
-	elseif event == "CHAT_MSG_GUILD" then
-		local gmsg = args[1]
-		local who = args[2]:gmatch("%w+")()
-		local msg = string.lower(gmsg)
-		if whoami ~= who and msg == "gn" or msg == "good night" or msg == "goodnight" or msg == "g n" or msg == "g.n" then
-			SendChatMessage(gmsg .. ' ' .. args[2], "GUILD")
 		end
 	elseif event == "CHAT_MSG_LOOT" then
 		if IsInRaid() then
@@ -198,31 +150,10 @@ function SlashCmdList.BUGG(msg, ...)
 			CreateMacro(name, icon, args, nil)
 		end
 	elseif cmd == "a" or cmd == "achievement" then
-		local lang = t[2]
-		local li = 1
-		local lt = {
-			"Je viens d'obtenir le haut fait", -- french
-			"Cefais y cyflawniad yn unig", -- welsh
-			"I just got the achievement", -- english
-			"Я только что получил достижение", -- russian
-		}
-
-		if lang == "welsh" then
-			li = 2
-		elseif lang == "english" then
-			li = 3
-		elseif lang == "russian" then
-			li = 4
-		elseif lang == "random" then
-			li = math.random(1, table.getn(lt))
-		else
-			li = 1
-		end
-
-		local s = lt[li] .. " [ClassicAchievements:" .. GenAchievementData(4) .. ':' .. GenAchievementData(8) .. ':' .. GenAchievementFVMsg(1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 15) .. ':' .. GenAchievementData(4) .. ']'
+		local s = "Je viens d'obtenir le haut fait [ClassicAchievements:" .. GenAchievementData(4) .. ':' .. GenAchievementData(8) .. ':' .. GenAchievementFVMsg(1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 15) .. ':' .. GenAchievementData(4) .. ']'
 		SendChatMessage(s, "GUILD")
 	elseif cmd == "i" or cmd == "item" then
-		local url = "https://tbc.wowhead.com/search?q="
+		local url = "https://classic.wowhead.com/search?q="
 		local query = ''
 		for i=2,ts,1 do
 			if query == '' then
@@ -258,8 +189,15 @@ function SlashCmdList.BUGG(msg, ...)
 			InviteUnit("a")
 			C_Timer.After(1, function() LeaveParty() end)
 		end
+	elseif cmd == "sm" then
+		local mn = t[2]
+		if mn == nil then
+			BuggPrint('Enter the macro name or id')
+		else
+			print(GetMacroBody(mn))
+		end
 	elseif cmd == "version" or cmd == "--version" or cmd == "-v" then
-		BuggPrint('1.4.2')
+		BuggPrint('1.5')
 	else
 		BuggPrint('Invalid command')
 	end
