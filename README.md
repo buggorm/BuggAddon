@@ -13,7 +13,6 @@ BuggAddon should now be visible in your in-game AddOn list. You can view this by
 ## Features
 
  - [Spit Protection](#spit-protection)
- - [Dungeon Roulette](#dungeon-roulette)
  - [Commands](#commands)
 
 ### Spit Protection
@@ -32,13 +31,6 @@ buggaddon.lua | In-game emote
 "balls so hard." | "Buggorm balls so hard."
 "LOLOLOLOLs at name." | "Buggorm LOLOLOLOLs at Vale."
 "is sorry to hear about name's genital warts." | "Buggorm is sorry to hear about Vale's genital warts."
-### Dungeon roulette
-Whenever somebody `/question` you, you will respond with a random dungeon. (Only Outland dungeons)
-#### Example
-```
-Vale questions you.
-Buggorm suggests The Black Morass.
-```
 ### Commands
 
 Command   | Action | Example | Output

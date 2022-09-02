@@ -93,22 +93,6 @@ frame:SetScript("OnEvent", function (self, event, ...)
 				SendChatMessage(msg, "EMOTE")
 			end
 		end
-	elseif event == "CHAT_MSG_LOOT" then
-		if IsInRaid() then
-			local who = args[1]:gmatch("%w+")()
-			for i=1, rls do
-				if who == rl[i] then
-					if string.match(args[1], who .. " receives loot") then
-						local itemId = getItemId(args[1])
-						local itemRarity = select(3, GetItemInfo(itemId))
-						if itemRarity >= 4 then
-							local itemLink = select(2, GetItemInfo(itemId))
-							SendChatMessage("When are you rolling out " .. itemLink .. "?", "WHISPER", nil, who)
-						end
-					end
-				end
-			end
-		end
 	end
 end)
 
@@ -140,6 +124,8 @@ function SlashCmdList.BUGG(msg, ...)
 				args = args .. ' ' .. t[i]
 			end
 		end
+
+		args = args:gsub(";", "\n")
 
 		local icon = 'INV_MISC_QUESTIONMARK'
 
